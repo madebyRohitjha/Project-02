@@ -24,3 +24,26 @@ validation_dataset = tf.keras.utils.image_dataset_from_directory(
 )
 
 print("Datasets loaded successfully!")
+
+import matplotlib.pyplot as plt
+
+# Get the class names
+class_names = train_dataset.class_names
+
+# Create a figure
+plt.figure(figsize=(10, 10))
+
+# Take one batch of images
+for images, labels in train_dataset.take(1):
+
+    # Display the first 9 images
+    for i in range(9):
+        plt.subplot(3, 3, i + 1)
+
+        plt.imshow(images[i].numpy().astype("uint8"))
+
+        plt.title(class_names[labels[i]])
+
+        plt.axis("off")
+
+plt.show()
