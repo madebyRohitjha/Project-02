@@ -47,3 +47,6 @@ for images, labels in train_dataset.take(1):
         plt.axis("off")
 
 plt.show()
+for images, labels in train_dataset.take(1):
+    print("Image batch shape:", images.shape)
+    print("Label batch shape:", labels.shape)
