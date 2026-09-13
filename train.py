@@ -50,3 +50,17 @@ plt.show()
 for images, labels in train_dataset.take(1):
     print("Image batch shape:", images.shape)
     print("Label batch shape:", labels.shape)
+
+normalization_layer = tf.keras.layers.Rescaling(1./255)
+
+train_dataset = train_dataset.map(
+    lambda images, labels: (normalization_layer(images), labels)
+)
+
+validation_dataset = validation_dataset.map(
+    lambda images, labels: (normalization_layer(images), labels)
+)
+
+for images, labels in train_dataset.take(1):
+    print("Minimum pixel value:", tf.reduce_min(images).numpy())
+    print("Maximum pixel value:", tf.reduce_max(images).numpy())
