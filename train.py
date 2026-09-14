@@ -64,3 +64,11 @@ validation_dataset = validation_dataset.map(
 for images, labels in train_dataset.take(1):
     print("Minimum pixel value:", tf.reduce_min(images).numpy())
     print("Maximum pixel value:", tf.reduce_max(images).numpy())
+    model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(
+        32,
+        (3, 3),
+        activation="relu",
+        input_shape=(160, 160, 3)
+    )
+])
