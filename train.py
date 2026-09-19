@@ -141,3 +141,9 @@ model = tf.keras.Sequential([
 # -----------------------------
 
 model.summary()
+
+model.compile(
+    optimizer="adam",
+    loss="binary_crossentropy",
+    metrics=["accuracy"]
+)
