@@ -147,3 +147,8 @@ model.compile(
     loss="binary_crossentropy",
     metrics=["accuracy"]
 )
+history = model.fit(
+    train_dataset,
+    validation_data=validation_dataset,
+    epochs=10
+)
