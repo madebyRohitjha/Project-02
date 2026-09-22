@@ -152,3 +152,18 @@ history = model.fit(
     validation_data=validation_dataset,
     epochs=10
 )
+test_loss, test_accuracy = model.evaluate(validation_dataset)
+
+print("Validation Loss:", test_loss)
+print("Validation Accuracy:", test_accuracy)
+
+history = model.fit(
+    train_dataset,
+    validation_data=validation_dataset,
+    epochs=10
+)
+
+test_loss, test_accuracy = model.evaluate(validation_dataset)
+
+print("Validation Loss:", test_loss)
+print("Validation Accuracy:", test_accuracy)
