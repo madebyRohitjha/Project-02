@@ -167,3 +167,9 @@ test_loss, test_accuracy = model.evaluate(validation_dataset)
 
 print("Validation Loss:", test_loss)
 print("Validation Accuracy:", test_accuracy)
+
+tf.keras.layers.Dense(128, activation="relu"),
+
+tf.keras.layers.Dropout(0.5),
+
+tf.keras.layers.Dense(1, activation="sigmoid")
