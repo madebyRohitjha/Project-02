@@ -173,3 +173,6 @@ tf.keras.layers.Dense(128, activation="relu"),
 tf.keras.layers.Dropout(0.5),
 
 tf.keras.layers.Dense(1, activation="sigmoid")
+model.save("cats_vs_dogs_cnn.keras")
+
+print("Model saved successfully!")
