@@ -52,3 +52,61 @@ plt.imshow(image)
 plt.title(result)
 plt.axis("off")
 plt.show()
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+
+# Load the trained model
+model = tf.keras.models.load_model("cats_vs_dogs_cnn.keras")
+
+print("Model loaded successfully!")
+
+
+# Ask the user for an image
+image_path = input("Enter image path: ")
+
+
+# Load and resize the image
+image = tf.keras.utils.load_img(
+    image_path,
+    target_size=(160, 160)
+)
+
+
+# Convert image to numbers
+image_array = tf.keras.utils.img_to_array(image)
+
+
+# Normalize pixel values
+image_array = image_array / 255.0
+
+
+# Add batch dimension
+image_array = tf.expand_dims(image_array, 0)
+
+
+# Make prediction
+prediction = model.predict(image_array)
+
+
+# Get prediction score
+score = prediction[0][0]
+
+print("Prediction score:", score)
+
+
+# Convert score into Cat or Dog
+if score < 0.5:
+    result = "Cat 🐱"
+else:
+    result = "Dog 🐶"
+
+
+print("Prediction:", result)
+
+
+# Show image
+plt.imshow(image)
+plt.title(result)
+plt.axis("off")
+plt.show()
