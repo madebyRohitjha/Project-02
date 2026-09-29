@@ -94,19 +94,12 @@ score = prediction[0][0]
 
 print("Prediction score:", score)
 
-
-# Convert score into Cat or Dog
 if score < 0.5:
     result = "Cat 🐱"
+    confidence = (1 - score) * 100
 else:
     result = "Dog 🐶"
-
+    confidence = score * 100
 
 print("Prediction:", result)
-
-
-# Show image
-plt.imshow(image)
-plt.title(result)
-plt.axis("off")
-plt.show()
+print(f"Confidence: {confidence:.2f}%")
