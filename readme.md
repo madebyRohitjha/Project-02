@@ -1,6 +1,6 @@
 # 🐱🐶 Cats vs Dogs Classification using CNN
 
-A Deep Learning project that uses a **Convolutional Neural Network (CNN)** to classify images as either a **cat** or a **dog**.
+A Deep Learning project that uses a **Convolutional Neural Network (CNN)** to classify images as either a **Cat** or a **Dog**.
 
 This is **Project 02** in my Deep Learning learning journey.
 
@@ -8,19 +8,33 @@ This is **Project 02** in my Deep Learning learning journey.
 
 ## 🎯 Project Goal
 
-Build a CNN that can look at an image and predict:
+Build a CNN that can look at an image and predict whether it is:
 
 - 🐱 Cat
 - 🐶 Dog
 
-The project will cover the complete image-classification workflow, from loading and preprocessing images to training, evaluation, and prediction.
+The project covers the complete image-classification workflow:
+
+```text
+Dataset
+   ↓
+Preprocessing
+   ↓
+CNN
+   ↓
+Training
+   ↓
+Evaluation
+   ↓
+Prediction
+```
 
 ---
 
 ## 🛠️ Technologies Used
 
 - Python
-- TensorFlow
+- TensorFlow 2.21.0
 - Keras
 - NumPy
 - Matplotlib
@@ -29,9 +43,9 @@ The project will cover the complete image-classification workflow, from loading 
 
 ## 📂 Dataset
 
-The project uses the **Microsoft Cats vs Dogs (PetImages)** dataset.
+The project uses the Cats vs Dogs `PetImages` dataset.
 
-Dataset structure:
+Structure:
 
 ```text
 dataset/
@@ -42,68 +56,180 @@ dataset/
 
 The dataset contains:
 
-- **25,000 images**
-- **2 classes**
-  - Cat
-  - Dog
+```text
+25,000 images
+2 classes
+```
 
-For training, TensorFlow automatically splits the dataset into:
+The data is automatically split into:
 
-- **20,000 images for training**
-- **5,000 images for validation**
-
-This uses an **80/20 split**.
+```text
+20,000 images → Training
+5,000 images  → Validation
+```
 
 ---
 
-## 🧠 What I Have Learned
+## 🧠 CNN Architecture
 
-### 1. Virtual Environment
-
-Created and activated a Python virtual environment to keep project dependencies isolated.
-
-### 2. TensorFlow Setup
-
-Installed and verified TensorFlow.
-
-Current TensorFlow version:
+The final CNN contains:
 
 ```text
-2.21.0
+Input Image
+160 × 160 × 3
+       ↓
+Conv2D
+32 filters
+       ↓
+MaxPooling
+       ↓
+Conv2D
+64 filters
+       ↓
+MaxPooling
+       ↓
+Flatten
+       ↓
+Dense
+128 neurons
+       ↓
+Dropout
+50%
+       ↓
+Dense
+1 neuron
+       ↓
+Sigmoid
+       ↓
+Cat 🐱 / Dog 🐶
 ```
-
-### 3. Dataset Loading
-
-Used:
-
-```python
-tf.keras.utils.image_dataset_from_directory()
-```
-
-to load images directly from the Cat and Dog folders.
-
-### 4. Training and Validation Split
-
-Used:
-
-```python
-validation_split=0.2
-```
-
-to automatically divide the dataset:
-
-```text
-80% → Training
-20% → Validation
-```
-
-### 5. Image Visualization
-
-Used Matplotlib to display sample images from the dataset and their corresponding labels.
 
 ---
 
-## 🏗️ Current Project Structure
+## 🔬 Preprocessing
+
+### Image Resizing
+
+Every image is resized to:
+
+```text
+160 × 160 pixels
+```
+
+### Normalization
+
+Pixel values are converted from:
+
+```text
+0–255
+```
+
+to:
+
+```text
+0–1
+```
+
+using:
+
+```python
+tf.keras.layers.Rescaling(1.0 / 255)
+```
+
+---
+
+## 🧠 Model Training
+
+The model uses:
+
+```text
+Optimizer: Adam
+Loss: Binary Crossentropy
+Metric: Accuracy
+Epochs: 10
+```
+
+Training and validation performance are stored in the `history` object.
+
+---
+
+## 📊 Evaluation
+
+The model is evaluated using the validation dataset.
+
+The project also generates:
+
+- Training vs Validation Accuracy graph
+- Training vs Validation Loss graph
+
+These graphs help identify whether the model is learning properly or overfitting.
+
+---
+
+## 🛡️ Dropout
+
+A Dropout layer is included:
+
+```python
+tf.keras.layers.Dropout(0.5)
+```
+
+Dropout helps reduce overfitting by temporarily disabling some neurons during training.
+
+---
+
+## 💾 Saved Model
+
+The trained model is saved as:
+
+```text
+cats_vs_dogs_cnn.keras
+```
+
+The model file is ignored by Git using:
+
+```text
+*.keras
+```
+
+---
+
+## 🔮 Prediction
+
+`predict.py` loads the saved model and allows the user to provide an image path.
+
+Example:
+
+```text
+Enter image path:
+```
+
+The program returns:
+
+```text
+Prediction: Dog 🐶
+Confidence: 94.70%
+```
+
+---
+
+## 🧪 Multiple Image Testing
+
+`test_predictions.py` allows several images to be tested automatically.
+
+It reports:
+
+```text
+Image
+Prediction
+Confidence
+```
+
+for each image.
+
+---
+
+## 📁 Project Structure
 
 ```text
 project02/
@@ -114,65 +240,101 @@ project02/
 │       └── Dog/
 │
 ├── train.py
-├── venv/
-└── README.md
+├── predict.py
+├── test_predictions.py
+├── requirements.txt
+├── .gitignore
+├── README.md
+└── venv/
+```
+
+The `venv/` folder is kept locally and ignored by Git.
+
+---
+
+## ▶️ How to Run
+
+### 1. Create virtual environment
+
+```powershell
+python -m venv venv
+```
+
+### 2. Activate it
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```powershell
+pip install -r requirements.txt
+```
+
+### 4. Train the model
+
+```powershell
+python train.py
+```
+
+### 5. Make a prediction
+
+```powershell
+python predict.py
+```
+
+### 6. Test multiple images
+
+```powershell
+python test_predictions.py
 ```
 
 ---
 
-# ✅ Checkpoint 1
+## 📚 What I Learned
 
-### Project Setup
+Through this project I practiced:
 
-- [x] Created Project 02
-- [x] Created virtual environment
-- [x] Activated virtual environment
-- [x] Installed TensorFlow
-- [x] Installed NumPy
-- [x] Installed Matplotlib
-- [x] Verified TensorFlow 2.21.0
-- [x] Downloaded/extracted Cats vs Dogs dataset
-- [x] Loaded 25,000 images
-- [x] Created 80/20 training-validation split
-- [x] Visualized sample images
-
-### Dataset Result
-
-```text
-Total images:       25,000
-Training images:    20,000
-Validation images:  5,000
-Classes:            2
-```
-
----
-
-## 🚀 Next Steps
-
-- [ ] Understand image dimensions and RGB channels
-- [ ] Preprocess images
-- [ ] Build the first CNN
-- [ ] Understand Convolution layers
-- [ ] Understand Filters/Kernels
-- [ ] Understand ReLU
-- [ ] Understand Max Pooling
-- [ ] Add Dense layers
-- [ ] Train the CNN
-- [ ] Evaluate the model
-- [ ] Plot training/validation accuracy
-- [ ] Add Dropout
-- [ ] Improve the model
-- [ ] Save the trained model
-- [ ] Create `predict.py`
-- [ ] Test the model on new images
+- Loading image datasets
+- Training/validation splitting
+- Image visualization
+- Image normalization
+- Convolution layers
+- Filters and feature detection
+- Max pooling
+- Flattening feature maps
+- Dense layers
+- ReLU activation
+- Sigmoid activation
+- Binary classification
+- Binary crossentropy
+- Adam optimizer
+- Model training
+- Model evaluation
+- Accuracy and loss visualization
+- Dropout
+- Saving and loading models
+- Making predictions
+- Prediction confidence
+- Testing multiple images
+- Managing Python dependencies
+- Using Git and GitHub
 
 ---
 
-## 📚 Learning Approach
+## 🚀 Future Improvements
 
-I am building this project step-by-step while learning the concepts behind each part of the code.
+Possible improvements for this project:
 
-The goal is not only to make the model work, but also to understand **why each component is used**.
+- Data augmentation
+- More CNN layers
+- Batch normalization
+- Transfer learning
+- Use a pretrained model such as MobileNet or ResNet
+- Improve validation accuracy
+- Test on completely new external images
+- Build a simple web interface
 
 ---
 
@@ -181,3 +343,9 @@ The goal is not only to make the model work, but also to understand **why each c
 **Rohit Jha**
 
 Deep Learning Learning Journey
+
+---
+
+## ✅ Project Status
+
+**Project 02 completed: CNN Cats vs Dogs Classification** 🐱🐶
